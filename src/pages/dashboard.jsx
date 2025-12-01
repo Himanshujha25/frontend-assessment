@@ -1,5 +1,6 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 import {
   Box,
   Typography,
@@ -24,24 +25,48 @@ export default function Dashboard() {
             "radial-gradient(circle at 20% 20%, rgba(0,0,0,0.04) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(0,0,0,0.04) 0%, transparent 50%)",
         }}
       >
-        {/* TOP SECTION */}
-        <Box sx={{ mb: 6 }}>
-          <Typography
-            variant="h4"
-            fontWeight="bold"
-            mb={1}
-            sx={{ color: "#0d47a1" }}
+        {/* HEADER + LOGOUT */}
+        <Box
+          sx={{
+            mb: 6,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Box>
+            <Typography
+              variant="h4"
+              fontWeight="bold"
+              mb={1}
+              sx={{ color: "#0d47a1" }}
+            >
+              Welcome, Admin
+            </Typography>
+            <Typography variant="body1" color="gray">
+              Manage application data from a clean, modern, and professional dashboard.
+            </Typography>
+          </Box>
+
+          {/* LOGOUT BUTTON */}
+          <Button
+            variant="contained"
+            color="error"
+            sx={{
+              px: 4,
+              py: 1.2,
+              borderRadius: 2,
+              fontWeight: "bold",
+              textTransform: "none",
+            }}
+            onClick={() => signOut()}
           >
-            Welcome, Admin
-          </Typography>
-          <Typography variant="body1" color="gray">
-            Manage application data from a clean, modern, and professional dashboard.
-          </Typography>
+            Logout
+          </Button>
         </Box>
 
         {/* ANALYTICS SECTION */}
         <Grid container spacing={4} mb={6}>
-          {/* ANALYTIC CARD TEMPLATE */}
           {[
             {
               label: "Total Users",
