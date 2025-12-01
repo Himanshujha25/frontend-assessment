@@ -8,17 +8,11 @@ export const useProductStore = create((set) => ({
 
   fetchCategories: async () => {
     try {
-      set({ loading: true });
-
       const res = await fetch("https://dummyjson.com/products/categories");
       const data = await res.json();
-
-      // FIX: Always replace categories, never append
-      set({ categories: data, loading: false });
-
+      set({ categories: data });
     } catch (error) {
       console.error("Category fetch error:", error);
-      set({ loading: false });
     }
   },
 
@@ -39,10 +33,21 @@ export const useProductStore = create((set) => ({
         total: data.total,
         loading: false,
       });
-
     } catch (error) {
       console.error("Product fetch error:", error);
       set({ loading: false });
+    }
+  },
+
+  // 🔥 ADD THIS MISSING FUNCTION
+  fetchSingleProduct: async (id) => {
+    try {
+      const res = await fetch(`https://dummyjson.com/products/${id}`);
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.error("Single product fetch error:", error);
+      return null;
     }
   },
 }));

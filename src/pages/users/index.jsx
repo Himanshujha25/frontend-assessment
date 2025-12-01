@@ -13,7 +13,10 @@ import {
   TextField,
   Typography,
   Skeleton,
+  Button,
 } from "@mui/material";
+
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useUserStore } from "@/stores/userStore";
 import Link from "next/link";
 import debounce from "lodash.debounce";
@@ -40,6 +43,19 @@ export default function UsersPage() {
   return (
     <Layout>
       <Box p={4}>
+
+        {/* 🔙 Back Button */}
+        <Button
+          startIcon={<ArrowBackIcon />}
+          sx={{
+            mb: 2,
+            textTransform: "none",
+          }}
+          onClick={() => history.back()}
+        >
+          Back
+        </Button>
+
         {/* PAGE HEADER */}
         <Box mb={4}>
           <Typography variant="h4" fontWeight="bold" mb={1}>
@@ -64,9 +80,9 @@ export default function UsersPage() {
           }}
         />
 
-        {/* TABLE WRAPPER CARD */}
+        {/* TABLE WRAPPER */}
         <Paper sx={{ borderRadius: 3, overflow: "hidden", boxShadow: 3 }}>
-          {/* LOADING SKELETONS */}
+          {/* LOADING SKELETON */}
           {loading ? (
             <Table>
               <TableHead sx={{ bgcolor: "#f5f5f5" }}>
@@ -102,7 +118,7 @@ export default function UsersPage() {
             </Typography>
           ) : (
             <Table>
-              {/* TABLE HEADER */}
+              {/* HEADER */}
               <TableHead>
                 <TableRow sx={{ bgcolor: "#f5f5f5" }}>
                   <TableCell><b>Name</b></TableCell>
@@ -113,7 +129,7 @@ export default function UsersPage() {
                 </TableRow>
               </TableHead>
 
-              {/* TABLE BODY */}
+              {/* BODY */}
               <TableBody>
                 {users.map((u) => (
                   <TableRow

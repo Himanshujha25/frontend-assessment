@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
 import {
   Box,
@@ -15,37 +16,32 @@ import {
   Pagination,
   Skeleton,
   Chip,
+  Button,
 } from "@mui/material";
+
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Link from "next/link";
 import { useProductStore } from "@/stores/productStore";
 
-// 🔥 SAFE HELPERS (prevent undefined errors)
+// SAFETY HELPERS
 const getCategoryLabel = (cat) => {
   if (!cat) return "UNKNOWN";
-
   if (typeof cat === "string") return cat.toUpperCase();
-
-  if (typeof cat === "object") {
-    if (cat.name) return String(cat.name).toUpperCase();
-    if (cat.category) return String(cat.category).toUpperCase();
-    if (cat.slug) return String(cat.slug).toUpperCase();
-  }
-
+  if (cat.name) return cat.name.toUpperCase();
+  if (cat.category) return cat.category.toUpperCase();
+  if (cat.slug) return cat.slug.toUpperCase();
   return "UNKNOWN";
 };
 
 const getCategoryValue = (cat) => {
   if (!cat) return "";
-
   if (typeof cat === "string") return cat;
-  if (cat.slug) return cat.slug;
-  if (cat.category) return cat.category;
-  if (cat.name) return cat.name;
-
-  return "";
+  return cat.slug || cat.category || cat.name || "";
 };
 
 export default function ProductsPage() {
+  const router = useRouter();
+
   const {
     products,
     total,
@@ -71,7 +67,20 @@ export default function ProductsPage() {
   return (
     <Layout>
       <Box p={4}>
-        {/* Page Header */}
+
+        {/* BACK BUTTON */}
+        <Button
+          startIcon={<ArrowBackIcon />}
+          onClick={() => router.back()}
+          sx={{
+            mb: 2,
+            textTransform: "none",
+          }}
+        >
+          Back
+        </Button>
+
+        {/* HEADER */}
         <Typography variant="h4" fontWeight="bold" mb={1}>
           Product Catalogue
         </Typography>
@@ -79,7 +88,7 @@ export default function ProductsPage() {
           Browse all products with category filters, search, and pagination.
         </Typography>
 
-        {/* Search + Category Filter */}
+        {/* SEARCH + FILTERS */}
         <Box sx={{ display: "flex", gap: 2, mb: 4, flexWrap: "wrap" }}>
           <TextField
             label="Search Product"
@@ -103,7 +112,6 @@ export default function ProductsPage() {
             >
               <MenuItem value="all">All</MenuItem>
 
-              {/* SAFE CATEGORY MAPPING */}
               {categories.map((cat, i) => (
                 <MenuItem key={i} value={getCategoryValue(cat)}>
                   {getCategoryLabel(cat)}
@@ -113,7 +121,7 @@ export default function ProductsPage() {
           </FormControl>
         </Box>
 
-        {/* Skeleton Loader */}
+        {/* LOADING SKELETON */}
         {loading ? (
           <Grid container spacing={3}>
             {Array.from({ length: 9 }).map((_, i) => (
@@ -131,7 +139,7 @@ export default function ProductsPage() {
             ))}
           </Grid>
         ) : (
-          // Products Grid
+          /* PRODUCT GRID */
           <Grid container spacing={3}>
             {products.map((product) => (
               <Grid item xs={12} sm={6} md={4} key={product.id}>
@@ -184,7 +192,7 @@ export default function ProductsPage() {
           </Grid>
         )}
 
-        {/* Pagination */}
+        {/* PAGINATION */}
         <Box display="flex" justifyContent="center" mt={4}>
           <Pagination
             count={Math.ceil(total / limit)}

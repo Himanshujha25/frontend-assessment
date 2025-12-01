@@ -10,7 +10,10 @@ import {
   Grid,
   Avatar,
   Divider,
+  Button,
 } from "@mui/material";
+
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export default function UserDetails() {
   const router = useRouter();
@@ -37,107 +40,136 @@ export default function UserDetails() {
   return (
     <Layout>
       <Box
-        p={3}
-        maxWidth="800px"
+        p={2}
+        maxWidth="750px"
         mx="auto"
-        sx={{ minHeight: "90vh" }}
+        sx={{
+          minHeight: "90vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
         <Paper
           sx={{
-            p: 3,
-            borderRadius: 3,
-            background: "rgba(255,255,255,0.85)",
-            backdropFilter: "blur(8px)",
-            boxShadow: "0px 6px 20px rgba(0,0,0,0.1)",
+            p: 2,
+            borderRadius: 2,
+            width: "100%",
+            background: "rgba(255,255,255,0.9)",
+            boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
           }}
         >
+          {/* BACK BUTTON */}
+          <Button
+            startIcon={<ArrowBackIcon />}
+            sx={{
+              textTransform: "none",
+              mb: 1,
+              fontSize: "13px",
+              padding: "2px 6px",
+            }}
+            onClick={() => router.back()}
+          >
+            Back
+          </Button>
+
           {/* HEADER */}
           <Box
             display="flex"
             alignItems="center"
             gap={2}
-            mb={3}
+            mb={2}
             sx={{
-              pb: 2,
-              borderBottom: "2px solid #e5e5e5",
+              pb: 1,
+              borderBottom: "1px solid #e5e5e5",
             }}
           >
             <Avatar
               src={user.image}
               alt={user.firstName}
               sx={{
-                width: 80,
-                height: 80,
+                width: 65,
+                height: 65,
                 border: "2px solid #1976d2",
-                boxShadow: "0px 3px 8px rgba(25,118,210,0.25)",
               }}
             />
 
             <Box>
-              <Typography variant="h5" fontWeight="bold">
+              <Typography variant="h6" fontWeight="bold" sx={{ fontSize: "18px" }}>
                 {user.firstName} {user.lastName}
               </Typography>
               <Typography variant="body2" color="gray">
-                {user.gender}, {user.age} years
+                {user.gender}, {user.age} yrs
               </Typography>
             </Box>
           </Box>
 
           {/* PERSONAL INFO */}
           <Typography
-            variant="h6"
+            variant="subtitle1"
             fontWeight="bold"
-            sx={{ color: "#0d47a1", mb: 1 }}
+            sx={{ color: "#0d47a1", mb: 1, fontSize: "15px" }}
           >
             Personal Information
           </Typography>
 
-          <Grid container spacing={2} mb={2}>
-            <Grid item xs={12} sm={6}>
+          <Grid container spacing={1} mb={1}>
+            <Grid item xs={6}>
               <Info label="Email" value={user.email} />
               <Info label="Phone" value={user.phone} />
               <Info label="Blood Group" value={user.bloodGroup} />
+            </Grid>
+
+            <Grid item xs={6}>
               <Info label="Height" value={`${user.height} cm`} />
               <Info label="Weight" value={`${user.weight} kg`} />
             </Grid>
+          </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <Typography
-                variant="h6"
-                fontWeight="bold"
-                sx={{ color: "#0d47a1", mb: 1 }}
-              >
-                Address
-              </Typography>
+          <Divider sx={{ my: 1 }} />
 
+          {/* ADDRESS */}
+          <Typography
+            variant="subtitle1"
+            fontWeight="bold"
+            sx={{ color: "#0d47a1", mb: 1, fontSize: "15px" }}
+          >
+            Address
+          </Typography>
+
+          <Grid container spacing={1} mb={2}>
+            <Grid item xs={6}>
               <Info label="Address" value={user.address?.address} />
               <Info label="City" value={user.address?.city} />
+            </Grid>
+
+            <Grid item xs={6}>
               <Info label="State" value={user.address?.state} />
-              <Info label="Postal Code" value={user.address?.postalCode} />
+              <Info label="Postal" value={user.address?.postalCode} />
             </Grid>
           </Grid>
 
-          <Divider sx={{ my: 2 }} />
+          <Divider sx={{ my: 1 }} />
 
-          {/* COMPANY SECTION */}
+          {/* COMPANY */}
           <Typography
-            variant="h6"
+            variant="subtitle1"
             fontWeight="bold"
-            sx={{ color: "#0d47a1", mb: 1 }}
+            sx={{ color: "#0d47a1", mb: 1, fontSize: "15px" }}
           >
-            Company
+            Company Information
           </Typography>
 
           <Grid container spacing={1}>
-            <Grid item xs={12} sm={6}>
-              <Info label="Company Name" value={user.company?.name} />
+            <Grid item xs={6}>
+              <Info label="Company" value={user.company?.name} />
               <Info label="Department" value={user.company?.department} />
-              <Info label="Position" value={user.company?.title} />
             </Grid>
 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={6}>
+              <Info label="Position" value={user.company?.title} />
               <Info
-                label="Company Address"
+                label="Office Address"
                 value={user.company?.address?.address}
               />
             </Grid>
@@ -148,14 +180,14 @@ export default function UserDetails() {
   );
 }
 
-/* REUSABLE INFO COMPONENT (smaller version) */
+/* COMPACT INFO COMPONENT */
 function Info({ label, value }) {
   return (
-    <Box mb={0.8}>
-      <Typography fontWeight="bold" sx={{ fontSize: "14px" }}>
+    <Box mb={0.5}>
+      <Typography fontWeight="bold" sx={{ fontSize: "13px" }}>
         {label}:
       </Typography>
-      <Typography sx={{ color: "gray", fontSize: "14px" }}>
+      <Typography sx={{ color: "gray", fontSize: "13px" }}>
         {value || "N/A"}
       </Typography>
     </Box>

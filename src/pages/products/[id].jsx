@@ -10,7 +10,9 @@ import {
   Chip,
   Divider,
   Rating,
+  Button,
 } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export default function ProductDetails() {
   const router = useRouter();
@@ -38,6 +40,15 @@ export default function ProductDetails() {
 
   return (
     <Box p={4}>
+      {/* 🔙 BACK BUTTON */}
+      <Button
+        startIcon={<ArrowBackIcon />}
+        sx={{ mb: 3 }}
+        onClick={() => router.back()}
+      >
+        Back
+      </Button>
+
       <Paper sx={{ p: 4, borderRadius: 3 }}>
         {/* PRODUCT TITLE */}
         <Typography variant="h4" fontWeight="bold" mb={1}>
@@ -70,9 +81,7 @@ export default function ProductDetails() {
                     component="img"
                     image={img}
                     onClick={() => {
-                      const newProduct = { ...product };
-                      newProduct.thumbnail = img;
-                      setProduct(newProduct);
+                      setProduct({ ...product, thumbnail: img });
                     }}
                     sx={{
                       height: 70,
