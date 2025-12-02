@@ -16,22 +16,24 @@ export default function Dashboard() {
     <ProtectedRoute>
       <Box
         sx={{
-          padding: 4,
+          p: { xs: 2, sm: 3, md: 4 },
           maxWidth: 1400,
-          margin: "0 auto",
+          mx: "auto",
           minHeight: "100vh",
           background: "#f5f7fa",
           backgroundImage:
             "radial-gradient(circle at 20% 20%, rgba(0,0,0,0.04) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(0,0,0,0.04) 0%, transparent 50%)",
         }}
       >
-        {/* HEADER + LOGOUT */}
+        {/* HEADER */}
         <Box
           sx={{
-            mb: 6,
+            mb: { xs: 4, md: 6 },
             display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
             justifyContent: "space-between",
-            alignItems: "center",
+            alignItems: { xs: "flex-start", sm: "center" },
+            gap: 2,
           }}
         >
           <Box>
@@ -39,24 +41,25 @@ export default function Dashboard() {
               variant="h4"
               fontWeight="bold"
               mb={1}
-              sx={{ color: "#0d47a1" }}
+              sx={{ color: "#0d47a1", fontSize: { xs: "28px", sm: "32px" } }}
             >
               Welcome, Admin
             </Typography>
-            <Typography variant="body1" color="gray">
-              Manage application data from a clean, modern, and professional dashboard.
+            <Typography variant="body1" color="gray" sx={{ fontSize: { xs: "14px" } }}>
+              Manage application data from a clean, modern dashboard.
             </Typography>
           </Box>
 
-          {/* LOGOUT BUTTON */}
+          {/* LOGOUT */}
           <Button
             variant="contained"
             color="error"
             sx={{
-              px: 4,
+              px: { xs: 3, md: 4 },
               py: 1.2,
               borderRadius: 2,
               fontWeight: "bold",
+              width: { xs: "100%", sm: "auto" },
               textTransform: "none",
             }}
             onClick={() => signOut()}
@@ -66,7 +69,7 @@ export default function Dashboard() {
         </Box>
 
         {/* ANALYTICS SECTION */}
-        <Grid container spacing={4} mb={6}>
+        <Grid container spacing={3} mb={6}>
           {[
             {
               label: "Total Users",
@@ -87,7 +90,7 @@ export default function Dashboard() {
               shadow: "rgba(46,125,50,0.35)",
             },
           ].map((item, index) => (
-            <Grid item xs={12} sm={4} key={index}>
+            <Grid item xs={12} sm={6} md={4} key={index}>
               <Card
                 sx={{
                   borderRadius: 4,
@@ -103,10 +106,14 @@ export default function Dashboard() {
                 }}
               >
                 <CardContent>
-                  <Typography fontSize="15px" sx={{ opacity: 0.9 }}>
+                  <Typography fontSize={{ xs: "13px", md: "15px" }} sx={{ opacity: 0.9 }}>
                     {item.label}
                   </Typography>
-                  <Typography fontSize="34px" fontWeight="bold" mt={1}>
+                  <Typography
+                    fontSize={{ xs: "26px", md: "34px" }}
+                    fontWeight="bold"
+                    mt={1}
+                  >
                     {item.value}
                   </Typography>
                   <Typography fontSize="13px" sx={{ opacity: 0.85, mt: 1 }}>
@@ -125,7 +132,7 @@ export default function Dashboard() {
             <Card
               sx={{
                 borderRadius: 4,
-                p: 3,
+                p: { xs: 2, md: 3 },
                 backdropFilter: "blur(12px)",
                 background: "rgba(255,255,255,0.9)",
                 boxShadow: "0px 8px 20px rgba(0,0,0,0.08)",
@@ -141,20 +148,25 @@ export default function Dashboard() {
               }}
             >
               <CardContent>
-                <Typography variant="h5" fontWeight="bold" sx={{ color: "#1976d2" }}>
+                <Typography
+                  variant="h5"
+                  fontWeight="bold"
+                  sx={{ color: "#1976d2", fontSize: { xs: "20px", md: "24px" } }}
+                >
                   Manage Users
                 </Typography>
-                <Typography mt={1} color="gray">
-                  Search, filter and explore all users from the DummyJSON API.
+                <Typography mt={1} color="gray" sx={{ fontSize: { xs: "14px" } }}>
+                  Search, filter and explore users.
                 </Typography>
               </CardContent>
 
               <CardActions>
-                <Link href="/users" style={{ textDecoration: "none" }}>
+                <Link href="/users" style={{ textDecoration: "none", width: "100%" }}>
                   <Button
                     variant="contained"
                     size="large"
                     sx={{
+                      width: { xs: "100%", sm: "auto" },
                       borderRadius: 2,
                       px: 4,
                       background: "#1976d2",
@@ -173,7 +185,7 @@ export default function Dashboard() {
             <Card
               sx={{
                 borderRadius: 4,
-                p: 3,
+                p: { xs: 2, md: 3 },
                 backdropFilter: "blur(12px)",
                 background: "rgba(255,255,255,0.9)",
                 boxShadow: "0px 8px 20px rgba(0,0,0,0.08)",
@@ -189,20 +201,25 @@ export default function Dashboard() {
               }}
             >
               <CardContent>
-                <Typography variant="h5" fontWeight="bold" sx={{ color: "#d81b60" }}>
+                <Typography
+                  variant="h5"
+                  fontWeight="bold"
+                  sx={{ color: "#d81b60", fontSize: { xs: "20px", md: "24px" } }}
+                >
                   Manage Products
                 </Typography>
-                <Typography mt={1} color="gray">
-                  Browse products, filter by categories, and view detailed product info.
+                <Typography mt={1} color="gray" sx={{ fontSize: { xs: "14px" } }}>
+                  Browse and explore products.
                 </Typography>
               </CardContent>
 
               <CardActions>
-                <Link href="/products" style={{ textDecoration: "none" }}>
+                <Link href="/products" style={{ textDecoration: "none", width: "100%" }}>
                   <Button
                     variant="contained"
                     size="large"
                     sx={{
+                      width: { xs: "100%", sm: "auto" },
                       borderRadius: 2,
                       px: 4,
                       background: "#d81b60",

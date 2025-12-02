@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <Box
       sx={{
-        p: { xs: 2, md: 4 },
+        p: { xs: 2, sm: 3, md: 4 },
         maxWidth: 1300,
         mx: "auto",
       }}
@@ -17,14 +17,14 @@ export default function Home() {
       <Box
         sx={{
           textAlign: "center",
-          py: { xs: 6, md: 10 },
-          px: 3,
+          py: { xs: 5, sm: 7, md: 10 },
+          px: { xs: 2, sm: 4 },
           borderRadius: 5,
           background: "linear-gradient(135deg, #0d47a1, #1976d2, #42a5f5)",
           backgroundSize: "200% 200%",
           animation: "gradientMove 6s ease infinite",
           color: "white",
-          mb: 10,
+          mb: { xs: 6, md: 10 },
           boxShadow: "0 15px 40px rgba(0,0,0,0.25)",
         }}
       >
@@ -32,7 +32,10 @@ export default function Home() {
           variant="h3"
           fontWeight="bold"
           mb={2}
-          sx={{ textShadow: "0px 3px 10px rgba(0,0,0,0.4)" }}
+          sx={{
+            textShadow: "0px 3px 10px rgba(0,0,0,0.4)",
+            fontSize: { xs: "28px", sm: "32px", md: "38px" },
+          }}
         >
           Frontend Technical Assessment
         </Typography>
@@ -45,23 +48,29 @@ export default function Home() {
             mx: "auto",
             lineHeight: 1.6,
             mb: 4,
-            fontSize: "18px",
+            fontSize: { xs: "15px", sm: "17px", md: "18px" },
           }}
         >
-          A modern dashboard built using Next.js, MUI, Zustand,
-          NextAuth, and DummyJSON API. Includes authentication,
-          protected routes, user & product modules, and a fully
-          responsive system.
+          A modern dashboard using Next.js, MUI, Zustand, NextAuth, and DummyJSON API.
+          Includes authentication, protected routes, and a fully responsive UI.
         </Typography>
 
         {/* BUTTONS */}
-        <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
-
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            justifyContent: "center",
+            gap: 2,
+            width: "100%",
+          }}
+        >
           {/* Always show Login */}
-          <Link href="/login">
+          <Link href="/login" style={{ width: "100%", maxWidth: "240px" }}>
             <Button
               variant="contained"
               color="secondary"
+              fullWidth
               sx={{
                 fontWeight: "bold",
                 px: 4,
@@ -75,11 +84,12 @@ export default function Home() {
             </Button>
           </Link>
 
-          {/* Show Dashboard only when logged in */}
+          {/* Dashboard (only when logged in) */}
           {session && (
-            <Link href="/dashboard">
+            <Link href="/dashboard" style={{ width: "100%", maxWidth: "240px" }}>
               <Button
                 variant="contained"
+                fullWidth
                 sx={{
                   background: "white",
                   color: "#0d47a1",
@@ -96,11 +106,13 @@ export default function Home() {
             </Link>
           )}
 
-          {/* Logout Button */}
+          {/* Logout */}
           {session && (
             <Button
               variant="outlined"
+              fullWidth
               sx={{
+                maxWidth: "240px",
                 px: 4,
                 py: 1.2,
                 borderRadius: 3,
@@ -116,12 +128,11 @@ export default function Home() {
               Logout
             </Button>
           )}
-
         </Box>
       </Box>
 
       {/* ABOUT SECTION */}
-      <Box sx={{ maxWidth: 900, mx: "auto", mb: 8 }}>
+      <Box sx={{ maxWidth: 900, mx: "auto", mb: { xs: 6, md: 8 }, px: { xs: 2, sm: 0 } }}>
         <Typography
           variant="h4"
           fontWeight="bold"
@@ -129,6 +140,7 @@ export default function Home() {
           textAlign="center"
           sx={{
             color: "#0d47a1",
+            fontSize: { xs: "26px", sm: "30px" },
             textShadow: "0px 1px 4px rgba(0,0,0,0.15)",
           }}
         >
@@ -141,54 +153,53 @@ export default function Home() {
             lineHeight: 1.9,
             color: "gray",
             textAlign: "center",
-            fontSize: "17px",
+            fontSize: { xs: "15px", sm: "17px" },
+            px: { xs: 1, sm: 0 },
           }}
         >
-          This project implements a complete frontend architecture:
-          authentication, protected dashboards, API integration, global
-          state using Zustand, product & user modules, and a clean scalable
-          structure. It showcases real-world development standards.
+          This project implements authentication, protected dashboards, API integration,
+          Zustand global store, and scalable folder structure following real-world standards.
         </Typography>
       </Box>
 
       {/* FEATURES SECTION */}
-      <Grid container spacing={4} sx={{ mb: 12 }}>
+      <Grid container spacing={4} sx={{ mb: { xs: 10, md: 12 } }}>
         {[
           {
             title: "Authentication",
-            desc: "NextAuth + DummyJSON credential login with protected routes.",
+            desc: "NextAuth + DummyJSON login with protected routes.",
             color: "#0d47a1",
           },
           {
             title: "Users Module",
-            desc: "Paginated users list with instant search & detailed pages.",
+            desc: "Paginated list with instant search.",
             color: "#6a1b9a",
           },
           {
             title: "Products Module",
-            desc: "Category filters, product search, pagination & details.",
+            desc: "Category filters, product search & details.",
             color: "#ad1457",
           },
           {
             title: "Zustand Store",
-            desc: "Global state, API caching, loading states, and efficiency.",
+            desc: "API caching, loaders & global state.",
             color: "#2e7d32",
           },
           {
             title: "Material UI",
-            desc: "Fully responsive UI with cards, grids, tables & animations.",
+            desc: "Fully responsive UI with animations.",
             color: "#00838f",
           },
           {
             title: "Performance Optimized",
-            desc: "Debounced search, memoized lists & minimal re-renders.",
+            desc: "Debounced search, memoized lists.",
             color: "#ef6c00",
           },
         ].map((card, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
             <Paper
               sx={{
-                p: 4,
+                p: { xs: 3, sm: 4 },
                 borderRadius: 4,
                 height: "100%",
                 textAlign: "center",
@@ -206,11 +217,11 @@ export default function Home() {
                 variant="h5"
                 fontWeight="bold"
                 mb={2}
-                sx={{ color: card.color }}
+                sx={{ color: card.color, fontSize: { xs: "20px", sm: "22px" } }}
               >
                 {card.title}
               </Typography>
-              <Typography sx={{ color: "gray", lineHeight: 1.7 }}>
+              <Typography sx={{ color: "gray", lineHeight: 1.7, fontSize: { xs: "14px", sm: "15px" } }}>
                 {card.desc}
               </Typography>
             </Paper>
@@ -220,7 +231,7 @@ export default function Home() {
 
       {/* FOOTER */}
       <Box textAlign="center" py={3} sx={{ opacity: 0.7 }}>
-        <Typography variant="body2" color="gray">
+        <Typography variant="body2" sx={{ fontSize: { xs: "13px", sm: "14px" }, color: "gray" }}>
           © {new Date().getFullYear()} Frontend Assessment Project • Built by Himanshu
         </Typography>
       </Box>

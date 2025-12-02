@@ -23,14 +23,11 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Link from "next/link";
 import { useProductStore } from "@/stores/productStore";
 
-// SAFETY HELPERS
+// CATEGORY HELPERS
 const getCategoryLabel = (cat) => {
   if (!cat) return "UNKNOWN";
   if (typeof cat === "string") return cat.toUpperCase();
-  if (cat.name) return cat.name.toUpperCase();
-  if (cat.category) return cat.category.toUpperCase();
-  if (cat.slug) return cat.slug.toUpperCase();
-  return "UNKNOWN";
+  return cat.slug || cat.category || cat.name || "UNKNOWN";
 };
 
 const getCategoryValue = (cat) => {
@@ -66,7 +63,7 @@ export default function ProductsPage() {
 
   return (
     <Layout>
-      <Box p={4}>
+      <Box p={{ xs: 2, sm: 3, md: 4 }}>
 
         {/* BACK BUTTON */}
         <Button
@@ -75,21 +72,42 @@ export default function ProductsPage() {
           sx={{
             mb: 2,
             textTransform: "none",
+            fontSize: { xs: "14px", sm: "15px" },
           }}
         >
           Back
         </Button>
 
         {/* HEADER */}
-        <Typography variant="h4" fontWeight="bold" mb={1}>
+        <Typography
+          variant="h4"
+          fontWeight="bold"
+          mb={1}
+          sx={{ fontSize: { xs: "24px", sm: "30px", md: "34px" } }}
+        >
           Product Catalogue
         </Typography>
-        <Typography variant="body1" color="gray" mb={3}>
-          Browse all products with category filters, search, and pagination.
+
+        <Typography
+          variant="body1"
+          color="gray"
+          mb={3}
+          sx={{ fontSize: { xs: "14px", sm: "16px" } }}
+        >
+          Browse all products with filters, search, and pagination.
         </Typography>
 
-        {/* SEARCH + FILTERS */}
-        <Box sx={{ display: "flex", gap: 2, mb: 4, flexWrap: "wrap" }}>
+        {/* SEARCH + CATEGORY FILTER */}
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2,
+            mb: 4,
+            flexWrap: "wrap",
+            width: "100%",
+          }}
+        >
+          {/* SEARCH */}
           <TextField
             label="Search Product"
             fullWidth
@@ -98,9 +116,11 @@ export default function ProductsPage() {
               setSearch(e.target.value);
               setPage(1);
             }}
+            sx={{ minWidth: "240px" }}
           />
 
-          <FormControl sx={{ width: 240 }}>
+          {/* CATEGORY FILTER */}
+          <FormControl sx={{ minWidth: "200px" }}>
             <InputLabel>Category</InputLabel>
             <Select
               value={category}
@@ -143,20 +163,14 @@ export default function ProductsPage() {
           <Grid container spacing={3}>
             {products.map((product) => (
               <Grid item xs={12} sm={6} md={4} key={product.id}>
-                <Link
-                  href={`/products/${product.id}`}
-                  style={{ textDecoration: "none" }}
-                >
+                <Link href={`/products/${product.id}`} style={{ textDecoration: "none" }}>
                   <Card
                     sx={{
                       height: "100%",
                       borderRadius: 3,
                       overflow: "hidden",
                       transition: "0.2s ease",
-                      "&:hover": {
-                        transform: "translateY(-6px)",
-                        boxShadow: 4,
-                      },
+                      "&:hover": { transform: "translateY(-6px)", boxShadow: 4 },
                     }}
                   >
                     <CardMedia
@@ -164,18 +178,32 @@ export default function ProductsPage() {
                       height="200"
                       image={product.thumbnail}
                       alt={product.title}
+                      sx={{ objectFit: "cover" }}
                     />
 
                     <CardContent>
-                      <Typography variant="h6" fontWeight="bold" mb={1}>
+                      <Typography
+                        variant="h6"
+                        fontWeight="bold"
+                        mb={1}
+                        sx={{ fontSize: { xs: "15px", sm: "17px" } }}
+                      >
                         {product.title}
                       </Typography>
 
-                      <Typography color="green" fontWeight="bold">
+                      <Typography
+                        color="green"
+                        fontWeight="bold"
+                        sx={{ fontSize: { xs: "14px", sm: "16px" } }}
+                      >
                         ₹ {product.price}
                       </Typography>
 
-                      <Typography variant="body2" mt={0.5}>
+                      <Typography
+                        variant="body2"
+                        mt={0.5}
+                        sx={{ fontSize: { xs: "13px", sm: "14px" } }}
+                      >
                         Rating: ⭐ {product.rating}
                       </Typography>
 
@@ -199,6 +227,13 @@ export default function ProductsPage() {
             page={page}
             onChange={(e, value) => setPage(value)}
             color="primary"
+            sx={{
+              "& .MuiPaginationItem-root": {
+                fontSize: { xs: "12px", sm: "14px" },
+                width: { xs: "30px", sm: "36px" },
+                height: { xs: "30px", sm: "36px" },
+              },
+            }}
           />
         </Box>
       </Box>

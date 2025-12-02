@@ -42,14 +42,15 @@ export default function UsersPage() {
 
   return (
     <Layout>
-      <Box p={4}>
+      <Box p={{ xs: 2, sm: 3, md: 4 }}>
 
-        {/* 🔙 Back Button */}
+        {/* BACK BUTTON */}
         <Button
           startIcon={<ArrowBackIcon />}
           sx={{
             mb: 2,
             textTransform: "none",
+            fontSize: { xs: "14px", sm: "15px" },
           }}
           onClick={() => history.back()}
         >
@@ -58,10 +59,20 @@ export default function UsersPage() {
 
         {/* PAGE HEADER */}
         <Box mb={4}>
-          <Typography variant="h4" fontWeight="bold" mb={1}>
+          <Typography
+            variant="h4"
+            fontWeight="bold"
+            mb={1}
+            sx={{ fontSize: { xs: "24px", sm: "32px" } }}
+          >
             Users Dashboard
           </Typography>
-          <Typography variant="body1" color="gray">
+
+          <Typography
+            variant="body1"
+            color="gray"
+            sx={{ fontSize: { xs: "14px", sm: "16px" } }}
+          >
             View and manage users fetched from the DummyJSON API.
           </Typography>
         </Box>
@@ -80,91 +91,88 @@ export default function UsersPage() {
           }}
         />
 
-        {/* TABLE WRAPPER */}
-        <Paper sx={{ borderRadius: 3, overflow: "hidden", boxShadow: 3 }}>
-          {/* LOADING SKELETON */}
-          {loading ? (
-            <Table>
-              <TableHead sx={{ bgcolor: "#f5f5f5" }}>
-                <TableRow>
-                  <TableCell><b>Name</b></TableCell>
-                  <TableCell><b>Email</b></TableCell>
-                  <TableCell><b>Phone</b></TableCell>
-                  <TableCell><b>Gender</b></TableCell>
-                  <TableCell><b>Company</b></TableCell>
-                </TableRow>
-              </TableHead>
-
-              <TableBody>
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <TableRow key={i}>
-                    <TableCell><Skeleton width="60%" /></TableCell>
-                    <TableCell><Skeleton width="80%" /></TableCell>
-                    <TableCell><Skeleton width="50%" /></TableCell>
-                    <TableCell><Skeleton width="40%" /></TableCell>
-                    <TableCell><Skeleton width="80%" /></TableCell>
+        {/* TABLE WRAPPER (Horizontal Scroll on Mobile) */}
+        <Paper
+          sx={{
+            borderRadius: 3,
+            overflow: "hidden",
+            boxShadow: 3,
+          }}
+        >
+          <TableContainer sx={{ maxWidth: "100%", overflowX: "auto" }}>
+            {loading ? (
+              <Table>
+                <TableHead sx={{ bgcolor: "#f5f5f5" }}>
+                  <TableRow>
+                    <TableCell><b>Name</b></TableCell>
+                    <TableCell><b>Email</b></TableCell>
+                    <TableCell><b>Phone</b></TableCell>
+                    <TableCell><b>Gender</b></TableCell>
+                    <TableCell><b>Company</b></TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          ) : users.length === 0 ? (
-            <Typography
-              textAlign="center"
-              py={5}
-              fontSize="18px"
-              color="gray"
-            >
-              No users found.
-            </Typography>
-          ) : (
-            <Table>
-              {/* HEADER */}
-              <TableHead>
-                <TableRow sx={{ bgcolor: "#f5f5f5" }}>
-                  <TableCell><b>Name</b></TableCell>
-                  <TableCell><b>Email</b></TableCell>
-                  <TableCell><b>Phone</b></TableCell>
-                  <TableCell><b>Gender</b></TableCell>
-                  <TableCell><b>Company</b></TableCell>
-                </TableRow>
-              </TableHead>
+                </TableHead>
 
-              {/* BODY */}
-              <TableBody>
-                {users.map((u) => (
-                  <TableRow
-                    key={u.id}
-                    hover
-                    sx={{
-                      cursor: "pointer",
-                      "&:hover": {
-                        bgcolor: "#f0f7ff",
-                        transition: "0.2s",
-                      },
-                    }}
-                  >
-                    <TableCell>
-                      <Link
-                        href={`/users/${u.id}`}
-                        style={{
-                          textDecoration: "none",
-                          color: "#1976d2",
-                          fontWeight: 600,
-                        }}
-                      >
-                        {u.firstName} {u.lastName}
-                      </Link>
-                    </TableCell>
-
-                    <TableCell>{u.email}</TableCell>
-                    <TableCell>{u.phone}</TableCell>
-                    <TableCell>{u.gender}</TableCell>
-                    <TableCell>{u.company?.name}</TableCell>
+                <TableBody>
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <TableRow key={i}>
+                      <TableCell><Skeleton width="60%" /></TableCell>
+                      <TableCell><Skeleton width="80%" /></TableCell>
+                      <TableCell><Skeleton width="50%" /></TableCell>
+                      <TableCell><Skeleton width="40%" /></TableCell>
+                      <TableCell><Skeleton width="80%" /></TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            ) : users.length === 0 ? (
+              <Typography textAlign="center" py={5} fontSize="18px" color="gray">
+                No users found.
+              </Typography>
+            ) : (
+              <Table>
+                <TableHead>
+                  <TableRow sx={{ bgcolor: "#f5f5f5" }}>
+                    <TableCell><b>Name</b></TableCell>
+                    <TableCell><b>Email</b></TableCell>
+                    <TableCell><b>Phone</b></TableCell>
+                    <TableCell><b>Gender</b></TableCell>
+                    <TableCell><b>Company</b></TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          )}
+                </TableHead>
+
+                <TableBody>
+                  {users.map((u) => (
+                    <TableRow
+                      key={u.id}
+                      hover
+                      sx={{
+                        cursor: "pointer",
+                        "&:hover": { bgcolor: "#f0f7ff" },
+                      }}
+                    >
+                      <TableCell>
+                        <Link
+                          href={`/users/${u.id}`}
+                          style={{
+                            textDecoration: "none",
+                            color: "#1976d2",
+                            fontWeight: 600,
+                          }}
+                        >
+                          {u.firstName} {u.lastName}
+                        </Link>
+                      </TableCell>
+
+                      <TableCell>{u.email}</TableCell>
+                      <TableCell>{u.phone}</TableCell>
+                      <TableCell>{u.gender}</TableCell>
+                      <TableCell>{u.company?.name}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )}
+          </TableContainer>
 
           {/* PAGINATION */}
           <TablePagination
@@ -172,10 +180,19 @@ export default function UsersPage() {
             count={total}
             page={page}
             rowsPerPage={limit}
+            rowsPerPageOptions={[5, 10, 20]}
             onPageChange={(e, newPage) => setPage(newPage)}
             onRowsPerPageChange={(e) => {
               setLimit(parseInt(e.target.value, 10));
               setPage(0);
+            }}
+            sx={{
+              "& .MuiTablePagination-toolbar": {
+                fontSize: { xs: "12px", sm: "14px" },
+                flexWrap: "wrap",
+                gap: 1,
+                justifyContent: { xs: "center", sm: "space-between" },
+              },
             }}
           />
         </Paper>
